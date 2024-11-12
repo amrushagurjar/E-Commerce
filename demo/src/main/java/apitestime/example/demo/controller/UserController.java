@@ -1,11 +1,12 @@
 package apitestime.example.demo.controller;
-
 import apitestime.example.demo.Dto.LoginResponse;
 import apitestime.example.demo.Dto.UserDto;
+import apitestime.example.demo.component.KafkaProducer;
 import apitestime.example.demo.config.JwtHelper;
 import apitestime.example.demo.service.LoginService;
 import apitestime.example.demo.service.SignUpService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-
+    private final KafkaProducer kafkaProducer;
     private final SignUpService signUpService;
    // private LoginResponse LoginResponse;
 
@@ -54,16 +55,22 @@ public class UserController {
     public ResponseEntity<LoginResponse> login(@RequestBody UserDto userDto) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
         System.out.println("tttttttttt");
-        return null;
-        //String token = JwtHelper.generateToken(userDto.getEmail());
-       // return ResponseEntity.ok(new LoginResponse(userDto.getEmail(), token));
+       // return null;
+        String token = JwtHelper.generateToken(userDto.getEmail());
+        System.out.println(token);
 
+      return ResponseEntity.ok(new LoginResponse(userDto.getEmail(), token));
     }
 
     @GetMapping("/validate")
     public ResponseEntity<Boolean> tokenValidation() {
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/send")
+    public void sendMessageToKafka(@RequestBody String message) {
+        kafkaProducer.sendMessage(message);
     }
 
 
