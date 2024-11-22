@@ -1,7 +1,7 @@
 package apitestime.example.demo.controller;
 import apitestime.example.demo.Dto.LoginResponse;
 import apitestime.example.demo.Dto.UserDto;
-import apitestime.example.demo.component.KafkaProducer;
+//import apitestime.example.demo.component.KafkaProducer;
 import apitestime.example.demo.config.JwtHelper;
 import apitestime.example.demo.service.LoginService;
 import apitestime.example.demo.service.SignUpService;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final KafkaProducer kafkaProducer;
+   // private final KafkaProducer kafkaProducer;
     private final SignUpService signUpService;
    // private LoginResponse LoginResponse;
 
@@ -68,10 +68,10 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/send")
-    public void sendMessageToKafka(@RequestBody String message) {
-        kafkaProducer.sendMessage(message);
-    }
+//    @PostMapping("/send")
+//    public void sendMessageToKafka(@RequestBody String message) {
+//        kafkaProducer.sendMessage(message);
+//    }
 
 
 }

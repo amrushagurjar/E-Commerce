@@ -41,14 +41,15 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers(HttpMethod.POST, "/signUp").permitAll()
+                      //  .requestMatchers(HttpMethod.POST, "/signUp").permitAll()
 
-                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                      //  .requestMatchers(HttpMethod.POST, "/login").permitAll()
 
-                        .anyRequest().authenticated())
+                      //  .anyRequest().authenticated())
+                        .anyRequest().permitAll())
 
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .authenticationManager(authenticationManager)
+              //  .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+             //   .authenticationManager(authenticationManager)
                 .build();
     }
 
