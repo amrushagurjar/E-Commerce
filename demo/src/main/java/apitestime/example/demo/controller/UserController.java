@@ -1,12 +1,11 @@
 package apitestime.example.demo.controller;
+
 import apitestime.example.demo.Dto.LoginResponse;
 import apitestime.example.demo.Dto.UserDto;
-//import apitestime.example.demo.component.KafkaProducer;
 import apitestime.example.demo.config.JwtHelper;
 import apitestime.example.demo.service.LoginService;
 import apitestime.example.demo.service.SignUpService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,30 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-   // private final KafkaProducer kafkaProducer;
+    // private final KafkaProducer kafkaProducer;
     private final SignUpService signUpService;
-   // private LoginResponse LoginResponse;
+    // private LoginResponse LoginResponse;
 
 
     private final LoginService loginService;
     private final AuthenticationManager authenticationManager;
-
-//    @GetMapping("/allusers")
-//    public ResponseEntity<List<UserDto>> getUserList() {
-//
-//        return ResponseEntity.ok(this.userService.getUserList());
-//    }
-//
-//    @GetMapping("/alluser/{id}")
-//    public ResponseEntity<String> getUserName(@PathVariable int id) {
-//        UserDto user = this.userService.getUser(id);
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @PostMapping("/alluser")
-//    public void addUser(@RequestBody UserDto user) {
-//        userService.addUser(user);
-//    }
 
 
     @PostMapping("/signUp")
@@ -55,11 +37,11 @@ public class UserController {
     public ResponseEntity<LoginResponse> login(@RequestBody UserDto userDto) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
         System.out.println("tttttttttt");
-       // return null;
+
         String token = JwtHelper.generateToken(userDto.getEmail());
         System.out.println(token);
 
-      return ResponseEntity.ok(new LoginResponse(userDto.getEmail(), token));
+        return ResponseEntity.ok(new LoginResponse(userDto.getEmail(), token));
     }
 
     @GetMapping("/validate")
@@ -73,5 +55,8 @@ public class UserController {
 //        kafkaProducer.sendMessage(message);
 //    }
 
-
+    @GetMapping("/ping")
+    public ResponseEntity<String> ping(){
+       return ResponseEntity.ok().build();
+    }
 }

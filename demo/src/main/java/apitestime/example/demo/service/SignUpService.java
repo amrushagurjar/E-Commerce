@@ -24,7 +24,8 @@ public class SignUpService {
         //ash+1=xyz
        // System.out.println(hashedPassword);
         user.setPassword(hashedPassword);
-        user.setFirstName(user.getFirstName());
+        System.out.println(userDto.getFirstName());
+        user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         this.userRepository.save(user);
     }
